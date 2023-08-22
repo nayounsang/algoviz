@@ -1,0 +1,49 @@
+import React, { useState } from 'react';
+import InputNodeEdge from './InputNodeEdge';
+import DeleteNodeEdge from './DeleteNodeEdge';
+import { GraphType } from 'src/types/graphtype';
+import { GraphPropType } from 'src/types/proptype';
+import ShowAdjList from './ShowAdjList';
+
+const showComponent = (value: string,
+    graph: GraphType,
+    setGraph: React.Dispatch<React.SetStateAction<GraphType>>,
+    direct:boolean): React.JSX.Element => {
+    let content: React.JSX.Element = <div></div>;
+    if (value == 'create') {
+        content = <InputNodeEdge graph={graph} setGraph={setGraph} direct={direct}/>
+    } else if (value == 'delete') {
+        content = <DeleteNodeEdge graph={graph} setGraph={setGraph}/>
+    } else if (value == 'read') {
+        content = <ShowAdjList graph={graph}/>
+    } else {
+        content = <h1>예상치 못한 오류</h1>
+    }
+    return content
+}
+
+const SelectDiv = ({graph,setGraph,direct}:GraphPropType) => {
+    const [selectedOption, setSelectedOption] = useState('create');
+
+    const handleChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
+        setSelectedOption(event.target.value);
+    };
+
+    let content = showComponent(selectedOption, graph, setGraph,direct);
+
+
+
+
+    return (
+        <div>
+            <select value={selectedOption} onChange={handleChange}>
+                <option value="create">간선,정점 추가</option>
+                <option value="delete">간선,정점 삭제</option>
+                <option value="read">그래프 정보 확인</option>
+            </select>
+            {content}
+        </div>
+    );
+};
+
+export default SelectDiv;
