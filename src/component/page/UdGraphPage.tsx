@@ -4,11 +4,12 @@ import Console from "../console/Console";
 import { GraphType } from "src/types/graphtype";
 import DFSinterface from "../console/DFSInterface";
 import BFSinterface from "../console/BFSinterface";
+import Message from "../message/Message";
 
 
 const UdGraphPage = () => {
     const [graph, setGraph] = useState<GraphType>({ nodes: [], edges: [] });
-    const [message, setMessage] = useState<string>('');
+    const [message, setMessage] = useState<React.JSX.Element[]>([]);
    
     const udgAlgo = {
         DFS: <DFSinterface
@@ -43,7 +44,7 @@ const UdGraphPage = () => {
                 message={message}
                 setMessage={setMessage} />
             <Console commands={udgAlgo} graph={graph} setGraph={setGraph} />
-
+            <Message message={message} setMessage={setMessage}/>
         </div>
     )
 }

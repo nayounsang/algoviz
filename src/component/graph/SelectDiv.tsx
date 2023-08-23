@@ -5,31 +5,40 @@ import { GraphType } from 'src/types/graphtype';
 import { GraphPropType } from 'src/types/proptype';
 import ShowAdjList from './ShowAdjList';
 
-const showComponent = (value: string,
-    graph: GraphType,
-    setGraph: React.Dispatch<React.SetStateAction<GraphType>>,
-    direct:boolean): React.JSX.Element => {
-    let content: React.JSX.Element = <div></div>;
-    if (value == 'create') {
-        content = <InputNodeEdge graph={graph} setGraph={setGraph} direct={direct}/>
-    } else if (value == 'delete') {
-        content = <DeleteNodeEdge graph={graph} setGraph={setGraph}/>
-    } else if (value == 'read') {
-        content = <ShowAdjList graph={graph}/>
-    } else {
-        content = <h1>예상치 못한 오류</h1>
-    }
-    return content
-}
 
-const SelectDiv = ({graph,setGraph,direct}:GraphPropType) => {
+
+const SelectDiv = ({ graph, setGraph, direct, message, setMessage }: GraphPropType) => {
     const [selectedOption, setSelectedOption] = useState('create');
 
     const handleChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
         setSelectedOption(event.target.value);
     };
 
-    let content = showComponent(selectedOption, graph, setGraph,direct);
+    const showComponent = (value: string): React.JSX.Element => {
+        let content: React.JSX.Element = <div></div>;
+        if (value == 'create') {
+            content = <InputNodeEdge
+                graph={graph}
+                setGraph={setGraph}
+                direct={direct}
+                message={message}
+                setMessage={setMessage} />
+        } else if (value == 'delete') {
+            content = <DeleteNodeEdge
+                graph={graph}
+                setGraph={setGraph}
+                direct={direct}
+                message={message}
+                setMessage={setMessage} />
+        } else if (value == 'read') {
+            content = <ShowAdjList graph={graph} />
+        } else {
+            content = <h1>예상치 못한 오류</h1>
+        }
+        return content
+    }
+
+    let content = showComponent(selectedOption);
 
 
 

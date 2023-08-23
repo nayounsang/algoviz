@@ -14,7 +14,7 @@ const GraphArea = ({ options, direct, graph, setGraph, message, setMessage }: Pa
 
     return (
         <div>
-            <SelectDiv graph={graph} setGraph={setGraph} direct={direct} />
+            <SelectDiv graph={graph} setGraph={setGraph} direct={direct} message={message} setMessage={setMessage} />
             <Graph graph={graph} style={{ width: 800, height: 700, }} options={options} />
         </div>
     )

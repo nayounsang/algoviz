@@ -4,13 +4,15 @@ import { GraphType } from "./graphtype";
 export interface GraphPropType {
     graph: GraphType,
     setGraph: React.Dispatch<React.SetStateAction<GraphType>>
-    direct?: boolean
+    direct?: boolean,
+    message?:  React.JSX.Element[],
+    setMessage?:React.Dispatch<React.SetStateAction< React.JSX.Element[]>>,
 }
 export interface PagePropType {
     graph: GraphType,
     setGraph: React.Dispatch<React.SetStateAction<GraphType>>,
-    message: string,
-    setMessage: React.Dispatch<React.SetStateAction<string>>,
+    message: React.JSX.Element[],
+    setMessage: React.Dispatch<React.SetStateAction<React.JSX.Element[]>>,
     direct: boolean,
     options: Object,
 }

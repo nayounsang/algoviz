@@ -5,7 +5,7 @@ import { addGraph } from 'src/function/State/GraphStateFunc';
 
 
 
-const InputNodeEdge = ({graph,setGraph,direct}:GraphPropType) => {
+const InputNodeEdge = ({ graph, setGraph, direct, message, setMessage }: GraphPropType) => {
 
 
     const [text, setText] = useState('');
@@ -14,8 +14,10 @@ const InputNodeEdge = ({graph,setGraph,direct}:GraphPropType) => {
     };
 
 
-    const handleButtonClick = async () => {
-        setGraph(await addGraph(text,graph,direct));
+    const handleButtonClick = () => {
+        const [g, m] = addGraph(text, graph, direct, message);
+        setGraph(g);
+        setMessage(m);
         setText('');
     }
 

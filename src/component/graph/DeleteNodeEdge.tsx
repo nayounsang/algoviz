@@ -3,27 +3,29 @@ import { GraphPropType } from 'src/types/proptype';
 import { removeGraph } from 'src/function/State/GraphStateFunc';
 
 
-const DeleteNodeEdge = ({graph,setGraph}:GraphPropType) => {
-    
+const DeleteNodeEdge = ({ graph, setGraph, direct, message, setMessage }: GraphPropType) => {
+
 
     const [text, setText] = useState('');
     const handleTextChange = (event) => {
         setText(event.target.value);
     };
 
-   
-    
 
-    const handleRemoveButtonClick = async () => {
-        setGraph(await removeGraph(text,graph))
+
+
+    const handleRemoveButtonClick = () => {
+        const [g, m] = removeGraph(text, graph, direct, message);
+        setGraph(g);
+        setMessage(m);
         setText('');
     }
 
     const handleInitButtonClick = () => {
-        setGraph({nodes:[],edges:[]})
+        setGraph({ nodes: [], edges: [] })
         setText('');
     }
-    
+
 
 
 

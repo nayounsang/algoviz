@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { newVisitColor } from "src/const/color";
 import { initGraphColor, nodeInGraph } from "src/function/Graph/GraphFunc";
 import { setNodeColor } from "src/function/Graph/NodeFunc";
@@ -52,7 +52,7 @@ const DFSinterface = ({
 
     const handleButtonClick = () => {
         if (!active) {
-            if (inputValue == '') {
+            if (inputValue === '') {
                 return
             }
             if (!nodeInGraph(graph, inputValue)) {
@@ -72,7 +72,7 @@ const DFSinterface = ({
     };
 
     const handleProccessClick = () => {
-        if (arr.length != 0) {
+        if (arr.length !== 0) {
             let stack = [...arr];
             let tmpPath = [...path];
             let tmpHistory = [...history]
@@ -93,12 +93,13 @@ const DFSinterface = ({
 
 
         } else {
-
+            setMessage([...message,<p>더 이상 진행할 수 없습니다.</p>])
         }
     }
 
     const handleBackClick = () => {
         if (history.length <= 1) {
+            setMessage([...message,<p>더 이상 되돌릴 수 없습니다.</p>])
             return
         }
         let tmpHistory = [...history];
