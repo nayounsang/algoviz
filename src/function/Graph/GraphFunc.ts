@@ -2,7 +2,7 @@ import { EdgeType, GraphType,NodeType,adjListType } from "src/types/graphtype"
 
 export const nodeInGraph = (g:GraphType,id:string):boolean => {
     for (const n of g.nodes){
-        if (n.id == id){
+        if (n.id === id){
             return true
         }
     }
@@ -11,7 +11,7 @@ export const nodeInGraph = (g:GraphType,id:string):boolean => {
 
 export const edgeInGraph = (g:GraphType,from:string,to:string):boolean => {
     for (const e of g.edges){
-        if (e.from == from && e.to == to){
+        if (e.from === from && e.to === to){
             return true
         }
     }
@@ -25,7 +25,7 @@ export const GraphToAdjList = (g:GraphType):adjListType => {
         result[n.id] = [];
     }
     for (const e of g.edges){
-        result[e.from].push(e.label == undefined? e.to:`(${e.to}, ${e.label})`)
+        result[e.from].push(e.label === undefined? e.to:`(${e.to}, ${e.label})`)
     }
     return result;
 }
@@ -63,4 +63,14 @@ export const initGraphColor = (g:GraphType) => {
             })
         }
     )
+}
+
+export const isVaildWeightGraph = (g:GraphType):[boolean,string] => {
+    g.edges.forEach((e:EdgeType)=>{
+        const tmp = Number(e.label);
+        if (Number.isNaN(tmp)){
+            return [false,`${e.from}->${e.to}간선에 올바르지 못한 가중치를 할당했습니다.`]
+        }
+    })
+    return [true,'']
 }

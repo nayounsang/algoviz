@@ -26,7 +26,7 @@ const Message = ({ message, setMessage }) => {
         }
     }, [message]);
 
-    const stateObj = {}
+    
 
    
 

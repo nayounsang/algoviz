@@ -5,6 +5,7 @@ import { GraphType } from "src/types/graphtype";
 import DFSinterface from "../console/DFSInterface";
 import BFSinterface from "../console/BFSinterface";
 import Message from "../message/Message";
+import DijkstraInterface from "../console/DijkstraInterface";
 
 
 const UdGraphPage = () => {
@@ -24,8 +25,12 @@ const UdGraphPage = () => {
             setGraph={setGraph}
             message={message}
             setMessage={setMessage}
-           
-             />,
+        />,
+        Dijkstra: <DijkstraInterface
+            graph={graph}
+            setGraph={setGraph}
+            message={message}
+            setMessage={setMessage} />,
     }
 
 

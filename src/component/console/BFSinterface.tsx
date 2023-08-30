@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { newVisitColor } from "src/const/color";
 import { initGraphColor, nodeInGraph } from "src/function/Graph/GraphFunc";
 import { setNodeColor } from "src/function/Graph/NodeFunc";
@@ -53,9 +53,11 @@ const BFSinterface = ({
     const handleButtonClick = () => {
         if (!active) {
             if (inputValue == '') {
+                setMessage([...message,<p key={message.length}>시작 정점을 입력해주세요.</p>])
                 return
             }
             if (!nodeInGraph(graph, inputValue)) {
+                setMessage([...message,<p key={message.length}>그래프내에 존재하지 않는 정점입니다.</p>])
                 return
             }
             initButton(true);
@@ -93,12 +95,13 @@ const BFSinterface = ({
 
 
         } else {
-
+            setMessage([...message,<p key={message.length}>더 이상 진행할 수 없습니다.</p>])
         }
     }
 
     const handleBackClick = () => {
         if (history.length <= 1) {
+            setMessage([...message,<p key={message.length}>더 이상 되돌릴 수 없습니다.</p>])
             return
         }
         let tmpHistory = [...history];

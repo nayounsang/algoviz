@@ -16,21 +16,21 @@ const SelectDiv = ({ graph, setGraph, direct, message, setMessage }: GraphPropTy
 
     const showComponent = (value: string): React.JSX.Element => {
         let content: React.JSX.Element = <div></div>;
-        if (value == 'create') {
+        if (value === 'create') {
             content = <InputNodeEdge
                 graph={graph}
                 setGraph={setGraph}
                 direct={direct}
                 message={message}
                 setMessage={setMessage} />
-        } else if (value == 'delete') {
+        } else if (value === 'delete') {
             content = <DeleteNodeEdge
                 graph={graph}
                 setGraph={setGraph}
                 direct={direct}
                 message={message}
                 setMessage={setMessage} />
-        } else if (value == 'read') {
+        } else if (value === 'read') {
             content = <ShowAdjList graph={graph} />
         } else {
             content = <h1>예상치 못한 오류</h1>
