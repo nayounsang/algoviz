@@ -7,7 +7,7 @@ export const addEdge = (g: GraphType,
     from: string,
     to: string,
     label: string | undefined = undefined,
-    ): GraphType => {
+): GraphType => {
     if (!nodeInGraph(g, from) && !nodeInGraph(g, to)) {
         return (
             {
@@ -40,37 +40,51 @@ export const addEdge = (g: GraphType,
     )
 }
 
-export const removeEdge = (g: GraphType, from: string, to: string,msg:React.JSX.Element[]): [GraphType,React.JSX.Element[]] => {
-    if (!edgeInGraph(g,from,to)){
+export const removeEdge = (g: GraphType, from: string, to: string, msg: React.JSX.Element[]): [GraphType, React.JSX.Element[]] => {
+    if (!edgeInGraph(g, from, to)) {
         return (
             [{
-                nodes:[...g.nodes],
-                edges:[...g.edges],
-            },[...msg,<p key = {msg.length}>{`${from},${to}: 존재하지 않는 간선입니다.`}</p>]]
+                nodes: [...g.nodes],
+                edges: [...g.edges],
+            }, [...msg, <p key={msg.length}>{`${from},${to}: 존재하지 않는 간선입니다.`}</p>]]
         )
     }
     return (
         [{
             nodes: [...g.nodes],
             edges: g.edges.filter((e: EdgeType) => e.from !== from || e.to !== to)
-        },[...msg]]
+        }, [...msg]]
     )
 }
 
 
-export const setEdgeColor = (g:GraphType,from:string,to:string,color:string):GraphType => {
-    if (edgeInGraph(g,from,to)){
-        return (
-            {
-                nodes:[...g.nodes],
-                edges:g.edges.map((e:EdgeType)=>{
-                    if (e.from === from && e.to === to){
-                        return {...e,color:color}
-                    } else {
-                        return {...e}
-                    }
-                }),
-            }
-        )
-    }
+export const setEdgeColor = (g: GraphType, from: string, to: string, color: string): GraphType => {
+    return (
+        {
+            nodes: [...g.nodes],
+            edges: g.edges.map((e: EdgeType) => {
+                if (e.from === from && e.to === to) {
+                    return { ...e, color: color }
+                } else {
+                    return { ...e }
+                }
+            }),
+        }
+    )
+
+}
+
+export const setEdgeColorFromNode = (g: GraphType, from: string, color: string): GraphType => {
+    return (
+        {
+            nodes: [...g.nodes],
+            edges: g.edges.map((e: EdgeType) => {
+                if (e.from === from) {
+                    return { ...e, color: color }
+                } else {
+                    return { ...e }
+                }
+            }),
+        }
+    )
 }

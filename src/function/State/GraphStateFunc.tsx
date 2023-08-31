@@ -90,3 +90,4 @@ export const removeGraph = (infoString: string,
 
     return [result, msg];
 }
+

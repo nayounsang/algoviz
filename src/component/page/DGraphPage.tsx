@@ -6,13 +6,14 @@ import DFSinterface from "../console/DFSInterface";
 import BFSinterface from "../console/BFSinterface";
 import Message from "../message/Message";
 import DijkstraInterface from "../console/DijkstraInterface";
+import TopoSortInterface from "../console/TopoSortInterface";
 
 
 
 const DGraphPage = () => {
     const [graph, setGraph] = useState<GraphType>({ nodes: [], edges: [] })
     const [message, setMessage] = useState<React.JSX.Element[]>([]);
-   
+
 
 
 
@@ -22,13 +23,18 @@ const DGraphPage = () => {
             setGraph={setGraph}
             message={message}
             setMessage={setMessage}
-            />,
+        />,
         BFS: <BFSinterface
             graph={graph}
             setGraph={setGraph}
             message={message}
             setMessage={setMessage} />,
         Dijkstra: <DijkstraInterface
+            graph={graph}
+            setGraph={setGraph}
+            message={message}
+            setMessage={setMessage} />,
+        TopologicalSort: <TopoSortInterface
             graph={graph}
             setGraph={setGraph}
             message={message}

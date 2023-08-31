@@ -69,8 +69,29 @@ export const isVaildWeightGraph = (g:GraphType):[boolean,string] => {
     g.edges.forEach((e:EdgeType)=>{
         const tmp = Number(e.label);
         if (Number.isNaN(tmp)){
-            return [false,`${e.from}->${e.to}간선에 올바르지 못한 가중치를 할당했습니다.`]
+            return [false,`${e.from}->${e.to}간선에 올바르지 못한 가중치(${e.label})를 할당했습니다.`]
         }
     })
     return [true,'']
+}
+
+export const getIndegree = (g:GraphType):{[key:string]:number} => {
+    let result = {};
+    g.nodes.forEach((n:NodeType)=>{
+        result[n.id] = 0;
+    })
+    g.edges.forEach((e:EdgeType)=>{
+        result[e.to] += 1;
+    })
+    return result;
+}
+
+export const initTopoQueue = (indeg:{[key:string]:number}):string[] => {
+    let result = [];
+    Object.keys(indeg).forEach((n:string)=>{
+        if (indeg[n] === 0){
+            result.push(n);
+        }
+    })
+    return result;
 }

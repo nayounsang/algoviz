@@ -8,6 +8,7 @@ import deepcopy from "deepcopy";
 import { EdgeType } from "src/types/graphtype";
 import { setNodeColor } from "src/function/Graph/NodeFunc";
 import { newVisitColor } from "src/const/color";
+import { cannotProceed, cantTurnBack, plzInputExist, plzInputStart, wrongWeightEdge } from "src/function/State/MessageFunc";
 
 
 const DijkstraInterface = ({
@@ -57,16 +58,16 @@ const DijkstraInterface = ({
     const handleButtonClick = () => {
         if (!active) {
             if (inputValue === '') {
-                setMessage([...message,<p key={message.length}>시작 정점을 입력해주세요.</p>])
+                setMessage(plzInputStart(message))
                 return
             }
             if (!nodeInGraph(graph, inputValue)) {
-                setMessage([...message,<p key={message.length}>그래프내에 존재하지 않는 정점입니다.</p>])
+                setMessage(plzInputExist(message,inputValue));
                 return
             }
             const [vaild,errorMsg] = isVaildWeightGraph(graph);
             if (!vaild){
-                setMessage([...message,<p key={message.length}>올바르지 못한 가중치가 있는 간선이 있습니다.</p>])
+                setMessage(wrongWeightEdge(message,errorMsg));
                 return
             }
             initButton(true);
@@ -121,13 +122,13 @@ const DijkstraInterface = ({
 
 
         } else {
-            setMessage([...message,<p>더 이상 진행할 수 없습니다.</p>])
+            setMessage(cannotProceed(message));
         }
     }
 
     const handleBackClick = () => {
         if (history.length <= 1) {
-            setMessage([...message,<p>더 이상 되돌릴 수 없습니다.</p>])
+            setMessage(cantTurnBack(message));
             return
         }
 
