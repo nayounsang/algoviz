@@ -6,7 +6,7 @@ import { getIndegree, initGraphColor, initTopoQueue } from "src/function/Graph/G
 import { setNodeColor } from "src/function/Graph/NodeFunc";
 import { topoProceed } from "src/function/State/AlgoFunc";
 import { cannotProceed, cantTurnBack, emptyTopoQueue } from "src/function/State/MessageFunc";
-import { setArr, setCurNode, setHistory, setVisit } from "src/store/algoslice";
+import { setArr, setCurNode, setHistory, setPath, setVisit } from "src/store/algoslice";
 import { RootState } from "src/store/store";
 
 const TopoSortInterface = ({
@@ -23,11 +23,11 @@ const TopoSortInterface = ({
 
 
     const dispatch = useDispatch();
-    // 위상정렬:q,curNode,visit(indeg)
     const arr = useSelector((state: RootState) => state.algo.arr);
     const visit = useSelector((state: RootState) => state.algo.visit);
     const curNode = useSelector((state: RootState) => state.algo.curNode);
     const history = useSelector((state: RootState) => state.algo.history);
+    const path = useSelector((state: RootState) => state.algo.path);
 
 
 
@@ -41,13 +41,14 @@ const TopoSortInterface = ({
         setEnableBack(bool);
     }
 
-    const initInfo = (value:boolean) => {
+    const initInfo = (value: boolean) => {
         const indeg = getIndegree(graph);
         const q = initTopoQueue(indeg);
-        dispatch(setArr(!value  ? [] : [...q]));
-        dispatch(setVisit(!value  ? {} : { ...indeg }));
+        dispatch(setArr(!value ? [] : [...q]));
+        dispatch(setVisit(!value ? {} : { ...indeg }));
         dispatch(setCurNode(''));
-        dispatch(setHistory(!value ? [] : [{ arr: [...q], visit: { ...indeg }, curNode: '' }]));
+        dispatch(setPath([]));
+        dispatch(setHistory(!value ? [] : [{ arr: [...q], visit: { ...indeg }, curNode: '', path: [] }]));
     }
 
     const handleButtonClick = () => {
@@ -74,7 +75,9 @@ const TopoSortInterface = ({
             dispatch(setCurNode(node));
             dispatch(setArr([...queue]));
             dispatch(setVisit({ ...newIndeg }));
-            dispatch(setHistory([...history, { arr: [...queue], visit: { ...newIndeg }, curNode: node }]));
+            dispatch(setPath([...path, node]));
+            dispatch(setHistory([...history, { arr: [...queue], visit: { ...newIndeg }, curNode: node, path: [...path, node] }]));
+
             setGraph(setEdgeColorFromNode(setNodeColor(graph, node, newVisitColor), node, usedEdge));
         } else {
             setMessage(cannotProceed(message));
@@ -82,7 +85,6 @@ const TopoSortInterface = ({
     }
 
     const handleBackClick = () => {
-        console.log(history);
         if (history.length <= 1) {
             setMessage(cantTurnBack(message));
             return
@@ -95,6 +97,7 @@ const TopoSortInterface = ({
         dispatch(setCurNode(last.curNode));
         dispatch(setArr([...last.arr]));
         dispatch(setVisit({ ...last.visit }));
+        dispatch(setPath([...last.path]));
         dispatch(setHistory([...tmpHistory]));
         setGraph(setEdgeColorFromNode(setNodeColor(graph, lastNode, "#ffffff"), lastNode, '#000000'));
     }
