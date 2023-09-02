@@ -2,13 +2,21 @@ import React, { useState } from "react";
 import { PriorityQueue } from "@datastructures-js/priority-queue";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "src/store/store";
-import { setCurNode, setHistory,setPq,setVisit } from "src/store/algoslice";
+import { setCurNode, setHistory, setPq, setVisit } from "src/store/algoslice";
 import { initGraphColor, isVaildWeightGraph, nodeInGraph } from "src/function/Graph/GraphFunc";
 import deepcopy from "deepcopy";
 import { EdgeType } from "src/types/graphtype";
 import { setNodeColor } from "src/function/Graph/NodeFunc";
 import { newVisitColor } from "src/const/color";
 import { cannotProceed, cantTurnBack, plzInputExist, plzInputStart, wrongWeightEdge } from "src/function/State/MessageFunc";
+import { setInfo } from "src/store/infoslice";
+import { makeInfo } from "src/function/State/InfoFunc";
+
+const transInfo = {
+    pq: '우선순위 큐',
+    visit: '시작 정점으로부터 최소거리',
+    curNode: '현재 정점',
+}
 
 
 const DijkstraInterface = ({
@@ -46,13 +54,15 @@ const DijkstraInterface = ({
 
     const initInfo = (value: string | undefined) => {
         const tmp = {}
-        if (value !== undefined){
+        if (value !== undefined) {
             tmp[value] = 0;
         }
-        dispatch(setPq(value !== undefined ? [[0,value]] : []));
+        dispatch(setPq(value !== undefined ? [[0, value]] : []));
         dispatch(setVisit(tmp));
         dispatch(setCurNode(''));
-        dispatch(setHistory(value !== undefined ? [{ pq: [[0,value]], visit: tmp, curNode: '' }] : []));
+        dispatch(setHistory(value !== undefined ? [{ pq: [[0, value]], visit: tmp, curNode: '' }] : []));
+        dispatch(setInfo(value !== undefined ? makeInfo([[transInfo.curNode, ''], [transInfo.pq, [[0, value]]], [transInfo.visit, tmp]]) : []))
+
     }
 
     const handleButtonClick = () => {
@@ -62,12 +72,12 @@ const DijkstraInterface = ({
                 return
             }
             if (!nodeInGraph(graph, inputValue)) {
-                setMessage(plzInputExist(message,inputValue));
+                setMessage(plzInputExist(message, inputValue));
                 return
             }
-            const [vaild,errorMsg] = isVaildWeightGraph(graph);
-            if (!vaild){
-                setMessage(wrongWeightEdge(message,errorMsg));
+            const [vaild, errorMsg] = isVaildWeightGraph(graph);
+            if (!vaild) {
+                setMessage(wrongWeightEdge(message, errorMsg));
                 return
             }
             initButton(true);
@@ -84,39 +94,40 @@ const DijkstraInterface = ({
 
     const handleProccessClick = () => {
         if (pq.length !== 0) {
-            let heap = PriorityQueue.fromArray<[number,string]>(deepcopy(pq),(a,b)=>{
-                if (a[0] < b[0]){
+            let heap = PriorityQueue.fromArray<[number, string]>(deepcopy(pq), (a, b) => {
+                if (a[0] < b[0]) {
                     return -1;
                 }
                 return 1;
 
             });
-            let tmpVisit = {...visit};
+            let tmpVisit = { ...visit };
             let tmpHistory = [...history];
 
-            const [dist,node] = heap.dequeue();
+            const [dist, node] = heap.dequeue();
 
-            const adjEdge:EdgeType[] = graph.edges.filter((e: EdgeType) => e.from === node);
-            adjEdge.forEach((e:EdgeType)=>{
+            const adjEdge: EdgeType[] = graph.edges.filter((e: EdgeType) => e.from === node);
+            adjEdge.forEach((e: EdgeType) => {
                 const d = Number(e.label);
-                if (!(e.to in tmpVisit)){
+                if (!(e.to in tmpVisit)) {
                     tmpVisit[e.to] = dist + d;
-                    heap.enqueue([dist+d,e.to]);
-                } else if (d + dist < tmpVisit[e.to]){
+                    heap.enqueue([dist + d, e.to]);
+                } else if (d + dist < tmpVisit[e.to]) {
                     tmpVisit[e.to] = dist + d;
-                    heap.enqueue([dist+d,e.to]);
+                    heap.enqueue([dist + d, e.to]);
                 }
             })
 
             deepcopy(heap.toArray());
 
-            
+
 
 
             dispatch(setCurNode(node));
             dispatch(setPq(deepcopy(heap.toArray())));
             dispatch(setVisit(tmpVisit));
-            dispatch(setHistory([...tmpHistory, { pq: deepcopy(heap.toArray()), visit:tmpVisit, curNode: node }]))
+            dispatch(setHistory([...tmpHistory, { pq: deepcopy(heap.toArray()), visit: tmpVisit, curNode: node }]));
+            dispatch(setInfo(makeInfo([[transInfo.curNode, node], [transInfo.pq, deepcopy(heap.toArray())], [transInfo.visit, tmpVisit]])));
             setGraph(setNodeColor(initGraphColor(graph), node, newVisitColor));
 
 
@@ -138,8 +149,9 @@ const DijkstraInterface = ({
 
         dispatch(setCurNode(last.curNode));
         dispatch(setPq([...last.pq]));
-        dispatch(setVisit({...last.visit}));
+        dispatch(setVisit({ ...last.visit }));
         dispatch(setHistory([...tmpHistory]));
+        dispatch(setInfo(makeInfo([[transInfo.curNode, last.curNode], [transInfo.pq, last.pq], [transInfo.visit, last.visit]])));
         setGraph(setNodeColor(initGraphColor(graph), last.curNode, newVisitColor));
     }
 

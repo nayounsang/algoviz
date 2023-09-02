@@ -8,8 +8,14 @@ import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from "src/store/store";
 import { setArr, setPath, setCurNode, setHistory } from "src/store/algoslice";
 import { cannotProceed, cantTurnBack, plzInputExist, plzInputStart } from "src/function/State/MessageFunc";
+import { setInfo } from "src/store/infoslice";
+import { makeInfo } from "src/function/State/InfoFunc";
 
-
+const transInfo = {
+    arr: '큐',
+    path: '방문 정점',
+    curNode: '현재 정점',
+}
 
 const BFSinterface = ({
     graph,
@@ -34,6 +40,7 @@ const BFSinterface = ({
 
 
 
+
     const handleInputChange = (event) => {
         setInputValue(event.target.value);
     };
@@ -49,6 +56,7 @@ const BFSinterface = ({
         dispatch(setPath(value !== undefined ? [value] : []));
         dispatch(setCurNode(''));
         dispatch(setHistory(value !== undefined ? [{ arr: [value], path: [value], curNode: '' }] : []));
+        dispatch(setInfo(value !== undefined ? makeInfo([[transInfo.curNode, ''], [transInfo.arr, [value]], [transInfo.path, [value]]]) : []))
     }
 
     const handleButtonClick = () => {
@@ -90,7 +98,8 @@ const BFSinterface = ({
             dispatch(setCurNode(node));
             dispatch(setArr(queue));
             dispatch(setPath(tmpPath));
-            dispatch(setHistory([...tmpHistory, { arr: queue, path: tmpPath, curNode: node }]))
+            dispatch(setHistory([...tmpHistory, { arr: queue, path: tmpPath, curNode: node }]));
+            dispatch(setInfo(makeInfo([[transInfo.curNode, node], [transInfo.arr, queue], [transInfo.path, tmpPath]])));
             setGraph(setNodeColor(graph, node, newVisitColor));
 
 
@@ -112,6 +121,7 @@ const BFSinterface = ({
         dispatch(setArr([...last.arr]));
         dispatch(setPath([...last.path]));
         dispatch(setHistory([...tmpHistory]));
+        dispatch(setInfo(makeInfo([[transInfo.curNode, last.curNode], [transInfo.arr, last.arr], [transInfo.path, last.path]])));
         setGraph(setNodeColor(graph, lastNode, '#ffffff'));
     }
 

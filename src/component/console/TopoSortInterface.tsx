@@ -5,9 +5,18 @@ import { setEdgeColorFromNode } from "src/function/Graph/EdgeFunc";
 import { getIndegree, initGraphColor, initTopoQueue } from "src/function/Graph/GraphFunc";
 import { setNodeColor } from "src/function/Graph/NodeFunc";
 import { topoProceed } from "src/function/State/AlgoFunc";
+import { makeInfo } from "src/function/State/InfoFunc";
 import { cannotProceed, cantTurnBack, emptyTopoQueue } from "src/function/State/MessageFunc";
 import { setArr, setCurNode, setHistory, setPath, setVisit } from "src/store/algoslice";
+import { setInfo } from "src/store/infoslice";
 import { RootState } from "src/store/store";
+
+const transInfo = {
+    arr: '큐',
+    visit: '진입차수',
+    curNode: '현재 정점',
+    path: '경로'
+}
 
 const TopoSortInterface = ({
     graph,
@@ -29,12 +38,6 @@ const TopoSortInterface = ({
     const history = useSelector((state: RootState) => state.algo.history);
     const path = useSelector((state: RootState) => state.algo.path);
 
-
-
-
-
-
-
     const initButton = (bool: boolean) => {
         setActive(bool);
         setEnableProcess(bool);
@@ -49,6 +52,11 @@ const TopoSortInterface = ({
         dispatch(setCurNode(''));
         dispatch(setPath([]));
         dispatch(setHistory(!value ? [] : [{ arr: [...q], visit: { ...indeg }, curNode: '', path: [] }]));
+        dispatch(setInfo(makeInfo(!value ? [] :
+            [[transInfo.curNode, ''],
+            [transInfo.arr, [...q]],
+            [transInfo.visit, { ...indeg }],
+            [transInfo.path, []]])));
     }
 
     const handleButtonClick = () => {
@@ -77,7 +85,11 @@ const TopoSortInterface = ({
             dispatch(setVisit({ ...newIndeg }));
             dispatch(setPath([...path, node]));
             dispatch(setHistory([...history, { arr: [...queue], visit: { ...newIndeg }, curNode: node, path: [...path, node] }]));
-
+            dispatch(setInfo(makeInfo(
+                [[transInfo.curNode, node],
+                [transInfo.arr, [...queue]],
+                [transInfo.visit, { ...newIndeg }],
+                [transInfo.path, [...path, node]]])));
             setGraph(setEdgeColorFromNode(setNodeColor(graph, node, newVisitColor), node, usedEdge));
         } else {
             setMessage(cannotProceed(message));
@@ -99,6 +111,11 @@ const TopoSortInterface = ({
         dispatch(setVisit({ ...last.visit }));
         dispatch(setPath([...last.path]));
         dispatch(setHistory([...tmpHistory]));
+        dispatch(setInfo(makeInfo(
+            [[transInfo.curNode, last.curNode],
+            [transInfo.arr, [...last.arr]],
+            [transInfo.visit, { ...last.visit }],
+            [transInfo.path, [...last.path]]])));
         setGraph(setEdgeColorFromNode(setNodeColor(graph, lastNode, "#ffffff"), lastNode, '#000000'));
     }
 

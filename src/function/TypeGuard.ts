@@ -8,12 +8,15 @@ export const isVisitType = (value: any): value is { [key: string]: (string | boo
     if (typeof value !== 'object') {
         return false;
     }
-
+    if (Array.isArray(value)){
+        return false;
+    }
     for (const key in value) {
-        if (typeof value[key] !== 'number' || typeof value[key] !== 'string' || typeof value[key] !== 'boolean') {
+        if (typeof value[key] !== 'number' && typeof value[key] !== 'string' && typeof value[key] !== 'boolean') {
             return false;
         }
     }
+
     return true;
 }
 
