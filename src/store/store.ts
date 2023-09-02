@@ -1,9 +1,10 @@
 import { Reducer, Store, combineReducers, configureStore } from '@reduxjs/toolkit';
 import algoReducer from './algoslice';
+import infoReducer from './infoslice';
 
 const rootReducer:Reducer = combineReducers({
     algo:algoReducer,
-    // other reducer
+    info:infoReducer,
 });
 
 const store:Store = configureStore({

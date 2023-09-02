@@ -8,7 +8,7 @@ interface stateType {
     visit: { [key: string]: (string | boolean | number) },
     curEdge: EdgeType,
     history: Object[],
-    pq:[number,string][],
+    pq: [number, string][],
 }
 
 const initialState: stateType = {
@@ -18,8 +18,7 @@ const initialState: stateType = {
     visit: {},
     curEdge: { from: '', to: '' },
     history: [],
-    pq:[],
-
+    pq: [],
 };
 
 const algoSlice = createSlice({
@@ -44,7 +43,7 @@ const algoSlice = createSlice({
         setHistory: (state, action: PayloadAction<Object[]>) => {
             state.history = action.payload
         },
-        setPq: (state,action: PayloadAction<[number,string][]>) => {
+        setPq: (state, action: PayloadAction<[number, string][]>) => {
             state.pq = action.payload;
         }
 
@@ -52,6 +51,6 @@ const algoSlice = createSlice({
 })
 
 
-export const { setArr, setPath, setCurNode, setCurEdge, setHistory, setVisit,setPq } = algoSlice.actions;
+export const { setArr, setPath, setCurNode, setCurEdge, setHistory, setVisit, setPq } = algoSlice.actions;
 
 export default algoSlice.reducer;
