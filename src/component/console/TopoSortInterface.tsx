@@ -61,9 +61,9 @@ const TopoSortInterface = ({
 
     const handleButtonClick = () => {
         if (!active) {
+            
             initInfo(true);
             initButton(true);
-
         }
         else {
             initButton(false);

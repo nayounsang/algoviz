@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import GraphArea from "../graph/GraphArea";
 import Console from "../console/Console";
 import { GraphType } from "src/types/graphtype";
 import DFSinterface from "../console/DFSInterface";
@@ -7,6 +6,11 @@ import BFSinterface from "../console/BFSinterface";
 import Message from "../message/Message";
 import DijkstraInterface from "../console/DijkstraInterface";
 import TopoSortInterface from "../console/TopoSortInterface";
+import '../../style/layout/graphpage.css';
+import Info from "../info/Info";
+import SelectDiv from "../graph/SelectDiv";
+import Graph from "react-vis-network-graph";
+import MyAppbar from "../MyAppbar";
 
 
 
@@ -44,21 +48,21 @@ const DGraphPage = () => {
 
 
     return (
-        <div>
-            <GraphArea options={{
-                edges: {
-                    arrows: {
-                        to: { enabled: true }
+        <div className="page">
+            <MyAppbar title="유향그래프" className="appbar"/>
+            <SelectDiv graph={graph} setGraph={setGraph} direct={true} message={message} setMessage={setMessage} />
+            <div className="graph">
+                <Graph graph={graph} options={{
+                    edges: {
+                        arrows: {
+                            to: { enabled: true }
+                        }
                     }
-                }
-            }}
-                direct={true}
-                graph={graph}
-                setGraph={setGraph}
-                message={message}
-                setMessage={setMessage} />
-            <Console commands={dgAlgo} graph={graph} setGraph={setGraph} />
-            <Message message={message} setMessage={setMessage}/>
+                }} />
+            </div>
+            <Console commands={dgAlgo} graph={graph} setGraph={setGraph} className="console" />
+            <Info className="info" />
+            <Message message={message} setMessage={setMessage} className="message" />
         </div>
     )
 }

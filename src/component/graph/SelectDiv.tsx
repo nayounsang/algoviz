@@ -1,17 +1,20 @@
 import React, { useState } from 'react';
 import InputNodeEdge from './InputNodeEdge';
 import DeleteNodeEdge from './DeleteNodeEdge';
-import { GraphType } from 'src/types/graphtype';
 import { GraphPropType } from 'src/types/proptype';
 import ShowAdjList from './ShowAdjList';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import InputLabel from '@mui/material/InputLabel';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
 
 
 
 const SelectDiv = ({ graph, setGraph, direct, message, setMessage }: GraphPropType) => {
-    const [selectedOption, setSelectedOption] = useState('create');
+    const [selectedMenuItem, setSelectedMenuItem] = useState('create');
 
     const handleChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
-        setSelectedOption(event.target.value);
+        setSelectedMenuItem(event.target.value);
     };
 
     const showComponent = (value: string): React.JSX.Element => {
@@ -38,21 +41,29 @@ const SelectDiv = ({ graph, setGraph, direct, message, setMessage }: GraphPropTy
         return content
     }
 
-    let content = showComponent(selectedOption);
+    let content = showComponent(selectedMenuItem);
 
 
 
 
     return (
-        <div>
-            <select value={selectedOption} onChange={handleChange}>
-                <option value="create">간선,정점 추가</option>
-                <option value="delete">간선,정점 삭제</option>
-                <option value="read">그래프 정보 확인</option>
-            </select>
+        <div className='selectdiv'>
+            <FormControl>
+                <InputLabel >동작</InputLabel>
+                <Select
+                    label="동작"
+                    value={selectedMenuItem}
+                    onChange={handleChange}
+                >
+                    <MenuItem value="create">간선,정점 추가</MenuItem>
+                    <MenuItem value="delete">간선,정점 삭제</MenuItem>
+                    <MenuItem value="read">그래프 정보 확인</MenuItem>
+                </Select>
+            </FormControl>
             {content}
         </div>
     );
 };
 
 export default SelectDiv;
+

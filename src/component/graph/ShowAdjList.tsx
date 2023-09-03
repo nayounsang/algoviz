@@ -12,17 +12,18 @@ const ShowAdjList = ({ graph }) => {
             setActiveSection(node);
         }
     };
+    
     return (
-        <div>
+        <div style={{overflow:'scroll'}}>
             {Object.keys(adjList).map((node) => (
                 <div key={node} onClick={() => handleSectionClick(node)} style ={{
                     cursor:'pointer',
-                    border:'1px solid black',
+                    border:'0.5px solid black',
                 }}>
-                    <h4>
+                    <p>
                         {node}
                         {activeSection === node ? ' ▲' : ' ▼'}
-                    </h4>
+                    </p>
                     {activeSection === node && <p>{adjList[node].join(', ')}</p>}
                 </div>
             ))}

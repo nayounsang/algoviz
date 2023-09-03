@@ -1,0 +1,33 @@
+.page {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    grid-template-rows: repeat(15, 1fr);
+    grid-column-gap: 5px;
+    grid-row-gap: 10px;
+    width: 100vw;
+    height: 100vh;
+}
+
+.appbar {
+    grid-area: 1 / 1 / 3 / 11;
+}
+
+.message {
+    grid-area: 10 / 1 / 16 / 6;
+}
+
+.info {
+    grid-area: 10 / 6 / 16 / 11;
+}
+
+.selectdiv {
+    grid-area: 3 / 1 / 10 / 3;
+}
+
+.console {
+    grid-area: 3 / 3 / 10 / 4;
+}
+
+.graph {
+    grid-area: 3 / 4 / 10 / 11;
+}

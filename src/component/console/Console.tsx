@@ -7,9 +7,10 @@ interface proptype{
     commands:CommandType,
     graph:GraphType,
     setGraph:React.Dispatch<React.SetStateAction<GraphType>>
+    className:string
 }
 
-const Console = ({ commands,graph,setGraph }:proptype) => {
+const Console = ({ commands,graph,setGraph,className }:proptype) => {
     const [selectedOption, setSelectedOption] = useState('DFS');
 
     const handleSelectChange = (event) => {
@@ -18,7 +19,7 @@ const Console = ({ commands,graph,setGraph }:proptype) => {
     };
 
     return (
-        <div>
+        <div className={className}>
             <select value={selectedOption} onChange={handleSelectChange}>
                 {Object.keys(commands).map((key,index) => (
                     <option key={index} value={key}>
@@ -33,7 +34,3 @@ const Console = ({ commands,graph,setGraph }:proptype) => {
 
 export default Console;
 
-/*
-props로 명령어 목록을 받음
-{명령어:{인풋형식:컴포넌트,함수:실행함수}}
-*/
