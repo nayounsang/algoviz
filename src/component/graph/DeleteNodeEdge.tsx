@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { GraphPropType } from 'src/types/proptype';
 import { removeGraph } from 'src/function/State/GraphStateFunc';
-import { Button, TextareaAutosize } from '@mui/material';
+import StyledTextarea from '../styled/StyledTextarea';
+import { BlackButton, RedButton } from '../styled/StyledButton';
+import { buttongroupStyle, textareaStyle } from 'src/style/layout/selectdivStyle';
 
 
-const DeleteNodeEdge = ({ graph, setGraph, direct, message, setMessage }: GraphPropType) => {
+const DeleteNodeEdge = ({ graph, setGraph, direct, message, setMessage, style }: GraphPropType) => {
 
 
     const [text, setText] = useState('');
@@ -16,6 +18,9 @@ const DeleteNodeEdge = ({ graph, setGraph, direct, message, setMessage }: GraphP
 
 
     const handleRemoveButtonClick = () => {
+        if (text === '') {
+            return
+        }
         const [g, m] = removeGraph(text, graph, direct, message);
         setGraph(g);
         setMessage(m);
@@ -33,16 +38,25 @@ const DeleteNodeEdge = ({ graph, setGraph, direct, message, setMessage }: GraphP
 
 
     return (
-        <div>
-            <TextareaAutosize
-                value={text}
-                onChange={handleTextChange}
-                placeholder={'간선,정점 정보 입력'}
-                autoCorrect='false'
-                minRows={15}
-            />
-            <Button onClick={handleRemoveButtonClick}>삭제하기</Button>
-            <Button onClick={handleInitButtonClick}>초기화하기</Button>
+        <div style={style}>
+            <div style={textareaStyle}>
+                <StyledTextarea
+                    value={text}
+                    onChange={handleTextChange}
+                    placeholder={'간선,정점 정보 입력'}
+                    autoCorrect='false'
+                    minRows={15}
+                    maxRows={15}
+                    sx={{
+                        width: '80%'
+                    }}
+                />
+            </div>
+            <div style={buttongroupStyle}>
+                <RedButton onClick={handleRemoveButtonClick}>삭제</RedButton>
+                <BlackButton onClick={handleInitButtonClick}>초기화</BlackButton>
+            </div>
+
         </div>
     );
 };

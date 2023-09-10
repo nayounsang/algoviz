@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { GraphPropType } from 'src/types/proptype';
 import { addGraph } from 'src/function/State/GraphStateFunc';
-import { Button, TextareaAutosize } from '@mui/material';
+import StyledTextarea from '../styled/StyledTextarea';
+import { BlueButton } from '../styled/StyledButton';
+import { buttonStyle, textareaStyle } from 'src/style/layout/selectdivStyle';
 
 
-
-
-const InputNodeEdge = ({ graph, setGraph, direct, message, setMessage }: GraphPropType) => {
+const InputNodeEdge = ({ graph, setGraph, direct, message, setMessage, style }: GraphPropType) => {
 
     const [text, setText] = useState('');
     const handleTextChange = (event) => {
@@ -15,6 +15,9 @@ const InputNodeEdge = ({ graph, setGraph, direct, message, setMessage }: GraphPr
 
 
     const handleButtonClick = () => {
+        if (text === '') {
+            return
+        }
         const [g, m] = addGraph(text, graph, direct, message);
         setGraph(g);
         setMessage(m);
@@ -25,15 +28,23 @@ const InputNodeEdge = ({ graph, setGraph, direct, message, setMessage }: GraphPr
 
 
     return (
-        <div>
-            <TextareaAutosize
-                value={text}
-                onChange={handleTextChange}
-                placeholder={'간선,정점 정보 입력'}
-                autoCorrect='false'
-                minRows={15}
-            />
-            <Button onClick={handleButtonClick}>추가하기</Button>
+        <div style={style}>
+            <div style={textareaStyle}>
+                <StyledTextarea
+                    value={text}
+                    onChange={handleTextChange}
+                    placeholder={'간선,정점 정보 입력'}
+                    autoCorrect='false'
+                    minRows={15}
+                    maxRows={15}
+                    sx={{
+                        width: '80%'
+                    }}
+                />
+            </div>
+            <div style={buttonStyle}>
+                <BlueButton onClick={handleButtonClick}>추가</BlueButton>
+            </div>
         </div>
     );
 };

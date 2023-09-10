@@ -1,15 +1,14 @@
-import React, { useEffect, useRef } from "react";
+import React from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "src/store/store";
-import '../../style/layout/graphpage.css';
 
-const Info = ({className}) => {
+const Info = ({style}) => {
 
     const info = useSelector((state: RootState) => state.info.info);
 
 
     return (
-        <div className={className}>
+        <div style={style}>
             <h3>알고리즘 정보</h3>
             {info.map((child: React.JSX.Element) => child
             )}

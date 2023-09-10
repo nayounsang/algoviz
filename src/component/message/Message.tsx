@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from "react";
+import { BlackButton } from "../styled/StyledButton";
 
-const Message = ({ message, setMessage,className }) => {
+const Message = ({ message, setMessage,style }) => {
 
 
     const handleButtonClick = () => {
@@ -18,10 +19,10 @@ const Message = ({ message, setMessage,className }) => {
 
 
     return (
-        <div className={className}>
+        <div style = {style}>
             <h3>출력 메시지</h3>
-            <button onClick={handleButtonClick}>메시지 초기화하기</button>
-            <div ref={divRef} style={{ overflow: 'auto' }}>
+            <BlackButton  onClick={handleButtonClick}>메시지 초기화하기</BlackButton>
+            <div ref={divRef} style={{ overflow: 'auto',maxHeight:200 }}>
                 {message.map((m: React.JSX.Element) => m)}
             </div>
         </div>

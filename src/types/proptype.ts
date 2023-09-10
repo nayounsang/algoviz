@@ -7,6 +7,7 @@ export interface GraphPropType {
     direct?: boolean,
     message?:  React.JSX.Element[],
     setMessage?:React.Dispatch<React.SetStateAction< React.JSX.Element[]>>,
+    style?:Object,
 }
 export interface PagePropType {
     graph: GraphType,

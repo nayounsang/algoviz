@@ -10,6 +10,9 @@ import { cannotProceed, cantTurnBack, emptyTopoQueue } from "src/function/State/
 import { setArr, setCurNode, setHistory, setPath, setVisit } from "src/store/algoslice";
 import { setInfo } from "src/store/infoslice";
 import { RootState } from "src/store/store";
+import { ButtonGroup } from "@mui/material";
+import { BlueButton, GreenButton, RedButton } from "../styled/StyledButton";
+import { buttongroupStyle, inputStyle, inputgroupStyle } from "src/style/layout/consoleStyle";
 
 const transInfo = {
     arr: '큐',
@@ -120,10 +123,16 @@ const TopoSortInterface = ({
     }
 
     return (
-        <div>
-            <button onClick={handleButtonClick}>{active ? '중지' : '시작'}</button>
-            <button disabled={!enableProcess} onClick={handleProccessClick}>진행하기</button>
-            <button disabled={!enableBack} onClick={handleBackClick}>뒤로가기</button>
+        <div style = {inputgroupStyle}>
+            <div style={inputStyle}>
+                <BlueButton onClick={handleButtonClick}>{active ? '중지' : '시작'}</BlueButton>
+            </div>
+            <div style={buttongroupStyle}>
+                <ButtonGroup>
+                    <GreenButton disabled={!enableProcess} onClick={handleProccessClick}>진행하기</GreenButton>
+                    <RedButton disabled={!enableBack} onClick={handleBackClick}>뒤로가가</RedButton>
+                </ButtonGroup>
+            </div>
         </div>
     )
 }

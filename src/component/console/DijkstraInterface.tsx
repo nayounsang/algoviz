@@ -11,6 +11,9 @@ import { newVisitColor } from "src/const/color";
 import { cannotProceed, cantTurnBack, plzInputExist, plzInputStart, wrongWeightEdge } from "src/function/State/MessageFunc";
 import { setInfo } from "src/store/infoslice";
 import { makeInfo } from "src/function/State/InfoFunc";
+import { BlueButton, GreenButton, RedButton } from "../styled/StyledButton";
+import { ButtonGroup } from "@mui/material";
+import { inputgroupStyle,inputStyle,buttonStyle,buttongroupStyle } from "src/style/layout/consoleStyle";
 
 const transInfo = {
     pq: '우선순위 큐',
@@ -156,14 +159,21 @@ const DijkstraInterface = ({
     }
 
     return (
-        <div>
+        <div style = {inputgroupStyle}>
             <input type="text"
                 value={inputValue}
                 onChange={handleInputChange}
-                placeholder="시작 정점" />
-            <button onClick={handleButtonClick}>{active ? '중지' : '시작'}</button>
-            <button disabled={!enableProcess} onClick={handleProccessClick}>진행하기</button>
-            <button disabled={!enableBack} onClick={handleBackClick}>뒤로가기</button>
+                placeholder="시작 정점"
+                style={inputStyle} />
+            <div style={buttonStyle}>
+                <BlueButton onClick={handleButtonClick}>{active ? '중지' : '시작'}</BlueButton>
+            </div>
+            <div style={buttongroupStyle}>
+                <ButtonGroup>
+                    <GreenButton disabled={!enableProcess} onClick={handleProccessClick}>진행하기</GreenButton>
+                    <RedButton disabled={!enableBack} onClick={handleBackClick}>뒤로가가</RedButton>
+                </ButtonGroup>
+            </div>
         </div>
     )
 }

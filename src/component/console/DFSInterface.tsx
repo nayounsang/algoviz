@@ -11,6 +11,11 @@ import { cannotProceed, cantTurnBack, plzInputExist, plzInputStart } from "src/f
 import { setInfo } from "src/store/infoslice";
 import { makeInfo } from "src/function/State/InfoFunc";
 
+
+import { BlueButton, GreenButton, RedButton } from "../styled/StyledButton";
+import { ButtonGroup } from "@mui/material";
+import { buttonStyle, buttongroupStyle, inputStyle, inputgroupStyle } from "src/style/layout/consoleStyle";
+
 const transInfo = {
     arr: '스택',
     path: '방문 정점',
@@ -125,16 +130,39 @@ const DFSinterface = ({
     }
 
     return (
-        <div>
+        <div style = {inputgroupStyle}>
             <input type="text"
                 value={inputValue}
                 onChange={handleInputChange}
-                placeholder="시작 정점" />
-            <button onClick={handleButtonClick}>{active ? '중지' : '시작'}</button>
-            <button disabled={!enableProcess} onClick={handleProccessClick}>진행하기</button>
-            <button disabled={!enableBack} onClick={handleBackClick}>뒤로가기</button>
+                placeholder="시작 정점"
+                style={inputStyle} />
+            <div style={buttonStyle}>
+                <BlueButton onClick={handleButtonClick}>{active ? '중지' : '시작'}</BlueButton>
+            </div>
+            <div style={buttongroupStyle}>
+                <ButtonGroup>
+                    <GreenButton disabled={!enableProcess} onClick={handleProccessClick}>진행하기</GreenButton>
+                    <RedButton disabled={!enableBack} onClick={handleBackClick}>뒤로가가</RedButton>
+                </ButtonGroup>
+            </div>
         </div>
     )
 }
 
 export default DFSinterface;
+
+/*
+<button onClick={handleButtonClick} className="button1">{active ? '중지' : '시작'}</button>
+            <button disabled={!enableProcess} onClick={handleProccessClick} className="button2">진행하기</button>
+            <button disabled={!enableBack} onClick={handleBackClick} className="button3">뒤로가기</button>
+
+<div className="button1">
+                <BlueButton onClick={handleButtonClick}>{active ? '중지' : '시작'}</BlueButton>
+            </div>
+            <div className="button2">
+                <GreenButton disabled={!enableProcess} onClick={handleProccessClick}>진행하기</GreenButton>
+            </div>
+            <div className="button3">
+                <RedButton disabled={!enableBack} onClick={handleBackClick}>뒤로가가</RedButton>
+            </div>
+*/

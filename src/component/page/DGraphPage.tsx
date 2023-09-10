@@ -6,11 +6,11 @@ import BFSinterface from "../console/BFSinterface";
 import Message from "../message/Message";
 import DijkstraInterface from "../console/DijkstraInterface";
 import TopoSortInterface from "../console/TopoSortInterface";
-import '../../style/layout/graphpage.css';
 import Info from "../info/Info";
 import SelectDiv from "../graph/SelectDiv";
 import Graph from "react-vis-network-graph";
 import MyAppbar from "../MyAppbar";
+import { appbarStyle, consoleStyle, graphStyle, infoStyle, messageStyle, pageStyle, selectdivStyle } from "src/style/layout/graphpageStyle";
 
 
 
@@ -27,31 +27,39 @@ const DGraphPage = () => {
             setGraph={setGraph}
             message={message}
             setMessage={setMessage}
-        />,
+            />,
         BFS: <BFSinterface
             graph={graph}
             setGraph={setGraph}
             message={message}
-            setMessage={setMessage} />,
+            setMessage={setMessage}
+            />,
         Dijkstra: <DijkstraInterface
             graph={graph}
             setGraph={setGraph}
             message={message}
-            setMessage={setMessage} />,
+            setMessage={setMessage} 
+            />,
         TopologicalSort: <TopoSortInterface
             graph={graph}
             setGraph={setGraph}
             message={message}
-            setMessage={setMessage} />,
+            setMessage={setMessage}
+            />,
     }
 
 
 
     return (
-        <div className="page">
-            <MyAppbar title="유향그래프" className="appbar"/>
-            <SelectDiv graph={graph} setGraph={setGraph} direct={true} message={message} setMessage={setMessage} />
-            <div className="graph">
+        <div style={pageStyle}>
+            <MyAppbar title="유향그래프" style={appbarStyle} />
+            <SelectDiv graph={graph}
+                setGraph={setGraph}
+                direct={true}
+                message={message}
+                setMessage={setMessage}
+                style={selectdivStyle} />
+            <div style={graphStyle}>
                 <Graph graph={graph} options={{
                     edges: {
                         arrows: {
@@ -60,9 +68,9 @@ const DGraphPage = () => {
                     }
                 }} />
             </div>
-            <Console commands={dgAlgo} graph={graph} setGraph={setGraph} className="console" />
-            <Info className="info" />
-            <Message message={message} setMessage={setMessage} className="message" />
+            <Console commands={dgAlgo} graph={graph} setGraph={setGraph} style={consoleStyle} />
+            <Info style={infoStyle} />
+            <Message message={message} setMessage={setMessage} style={messageStyle} />
         </div>
     )
 }
