@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import HomeIcon from '@mui/icons-material/Home';
 import MenuIcon from '@mui/icons-material/Menu';
+import HelpIcon from '@mui/icons-material/Help';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import CloseIcon from '@mui/icons-material/Close';
 import {
@@ -74,6 +75,8 @@ const MyAppbar = ({ title, style }: proptype) => {
                 <div style={{ height: '9vh' }}></div>
                 <List>
                     <MyItem icon={<HomeIcon/>} text={'홈페이지'} onClick={()=>{navigate('/')}}/>
+                    <Divider/>
+                    <MyItem icon={<HelpIcon/>} text={'도움말'} onClick={()=>{navigate('/help')}}/>
                     <Divider/>
                     <MyItem icon={<ArrowForwardIosIcon/>} text={'무향그래프'} onClick={()=>{navigate('/udgraph')}}/>
                     <Divider/>

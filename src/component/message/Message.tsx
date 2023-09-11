@@ -22,7 +22,7 @@ const Message = ({ message, setMessage,style }) => {
         <div style = {style}>
             <h3>출력 메시지</h3>
             <BlackButton  onClick={handleButtonClick}>메시지 초기화하기</BlackButton>
-            <div ref={divRef} style={{ overflow: 'auto',maxHeight:200 }}>
+            <div ref={divRef} style={{ overflow: 'auto',maxHeight:160 }}>
                 {message.map((m: React.JSX.Element) => m)}
             </div>
         </div>

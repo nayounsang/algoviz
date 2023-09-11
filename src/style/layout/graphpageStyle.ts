@@ -15,11 +15,11 @@ export const pageStyle = {
   };
   
   export const messageStyle = {
-    gridArea: '10 / 1 / 16 / 6',
+    gridArea: '11 / 1 / 16 / 6',
   };
   
   export const infoStyle = {
-    gridArea: '10 / 6 / 16 / 11',
+    gridArea: '11 / 6 / 16 / 11',
   };
   
   export const selectdivStyle = {
@@ -42,7 +42,7 @@ export const pageStyle = {
   };
   
   export const graphStyle = {
-    gridArea: '3 / 5 / 10 / 11',
+    gridArea: '3 / 5 / 11 / 11',
     border: '0.5px solid black',
     borderRadius: '5px',
   };
